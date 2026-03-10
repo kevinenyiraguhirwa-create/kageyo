@@ -1,0 +1,28 @@
+{
+  "hosting": {
+    "public": "online teach",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/package-lock.json"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/online teach/pages/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ]
+  }
+}

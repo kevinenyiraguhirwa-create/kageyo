@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - EduVault Smart Revision</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo" onclick="window.location.href='../index.html'">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduVault</span>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link active">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="courses.html" class="sidebar-link">
+                <i class="fas fa-book"></i>
+                <span>My Courses</span>
+            </a>
+            <a href="library.html" class="sidebar-link">
+                <i class="fas fa-book-open"></i>
+                <span>Library</span>
+            </a>
+            <a href="quiz.html" class="sidebar-link">
+                <i class="fas fa-robot"></i>
+                <span>AI Quizzes</span>
+            </a>
+            <a href="flashcards.html" class="sidebar-link">
+                <i class="fas fa-cards"></i>
+                <span>Flashcards</span>
+            </a>
+            <a href="certificates.html" class="sidebar-link">
+                <i class="fas fa-certificate"></i>
+                <span>Certificates</span>
+            </a>
+            <a href="admin.html" class="sidebar-link">
+                <i class="fas fa-cog"></i>
+                <span>Admin</span>
+            </a>
+            <a href="progress.html" class="sidebar-link">
+                <i class="fas fa-chart-line"></i>
+                <span>Progress</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="sidebar-link" onclick="logoutUser()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>Welcome back, <span id="userName">Student</span>!</h1>
+                <p>Continue your learning journey</p>
+            </div>
+            <div class="header-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search courses, books...">
+                </div>
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="user-profile">
+                    <div class="user-avatar" id="userAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name" id="displayUserName">Student</span>
+                        <span class="user-level">S5 Student</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon courses">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-value" id="completedCourses">3</span>
+                        <span class="stat-label">Courses Completed</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon modules">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-value" id="completedModules">15</span>
+                        <span class="stat-label">Modules Finished</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon quizzes">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-value" id="totalQuizzes">25</span>
+                        <span class="stat-label">Quizzes Taken</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon score">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-value" id="averageScore">82%</span>
+                        <span class="stat-label">Average Score</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Continue Learning -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>Continue Learning</h2>
+                <a href="courses.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="courses-grid">
+                <div class="course-card in-progress">
+                    <div class="course-banner math">
+                        <span class="progress-badge">In Progress</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>Advanced Mathematics</h3>
+                        <p>Calculus & Linear Algebra</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <div class="progress-info">
+                            <span>65% Complete</span>
+                            <span>13/20 Lessons</span>
+                        </div>
+                        <button class="btn-continue" onclick="window.location.href='course-view.html?id=1'">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="course-card in-progress">
+                    <div class="course-banner physics">
+                        <span class="progress-badge">In Progress</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>Physics Fundamentals</h3>
+                        <p>Mechanics & Thermodynamics</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%;"></div>
+                        </div>
+                        <div class="progress-info">
+                            <span>40% Complete</span>
+                            <span>8/20 Lessons</span>
+                        </div>
+                        <button class="btn-continue" onclick="window.location.href='course-view.html?id=2'">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="course-card in-progress">
+                    <div class="course-banner english">
+                        <span class="progress-badge">In Progress</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>English Literature</h3>
+                        <p>Classic Literature Analysis</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%;"></div>
+                        </div>
+                        <div class="progress-info">
+                            <span>80% Complete</span>
+                            <span>16/20 Lessons</span>
+                        </div>
+                        <button class="btn-continue" onclick="window.location.href='course-view.html?id=4'">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions & Recent Activity -->
+        <div class="dashboard-grid">
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <div class="section-header">
+                    <h2>Quick Actions</h2>
+                </div>
+                
+                <div class="actions-grid">
+                    <button class="action-card" onclick="window.location.href='quiz.html'">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Quiz</span>
+                    </button>
+                    <button class="action-card" onclick="window.location.href='library.html'">
+                        <i class="fas fa-book-open"></i>
+                        <span>Read Book</span>
+                    </button>
+                    <button class="action-card" onclick="window.location.href='flashcards.html'">
+                        <i class="fas fa-cards"></i>
+                        <span>Flashcards</span>
+                    </button>
+                    <button class="action-card" onclick="window.location.href='certificates.html'">
+                        <i class="fas fa-certificate"></i>
+                        <span>Certificates</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="recent-activity">
+                <div class="section-header">
+                    <h2>Recent Activity</h2>
+                </div>
+                
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon quiz">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Completed Math Quiz</h4>
+                            <p>Score: 85% • 10 questions</p>
+                        </div>
+                        <span class="activity-time">2 hours ago</span>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon book">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Read Physics Chapter 5</h4>
+                            <p>Thermodynamics Basics</p>
+                        </div>
+                        <span class="activity-time">Yesterday</span>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon certificate">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Earned Certificate</h4>
+                            <p>Biology Fundamentals</p>
+                        </div>
+                        <span class="activity-time">3 days ago</span>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon course">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Started New Course</h4>
+                            <p>Computer Science Basics</p>
+                        </div>
+                        <span class="activity-time">1 week ago</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Study Recommendations -->
+        <section class="recommendations">
+            <div class="section-header">
+                <h2>Recommended For You</h2>
+                <a href="courses.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="recommendations-scroll">
+                <div class="recommendation-card">
+                    <div class="rec-icon chemistry">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h4>Chemistry Essential</h4>
+                    <p>Based on your Physics progress</p>
+                    <button class="btn-start">Start Learning</button>
+                </div>
+                
+                <div class="recommendation-card">
+                    <div class="rec-icon coding">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>Programming Basics</h4>
+                    <p>Popular among S5 students</p>
+                    <button class="btn-start">Start Learning</button>
+                </div>
+                
+                <div class="recommendation-card">
+                    <div class="rec-icon business">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h4>Business Studies</h4>
+                    <p>Exam preparation</p>
+                    <button class="btn-start">Start Learning</button>
+                </div>
+                
+                <div class="recommendation-card">
+                    <div class="rec-icon history">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h4>World History</h4>
+                    <p>Expand your knowledge</p>
+                    <button class="btn-start">Start Learning</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI Chat Widget -->
+    <div class="ai-chat-widget">
+        <button class="chat-toggle" onclick="toggleAIChat()">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header">
+                <h4><i class="fas fa-robot"></i> AI Study Assistant</h4>
+                <button class="chat-close" onclick="toggleAIChat()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    <p>Hello! I'm your AI study assistant. How can I help you today?</p>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask me anything..." onkeypress="handleChatKeyPress(event)">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

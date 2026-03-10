@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Generator - EduVault Smart Revision</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo" onclick="window.location.href='../index.html'">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduVault</span>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="courses.html" class="sidebar-link">
+                <i class="fas fa-book"></i>
+                <span>My Courses</span>
+            </a>
+            <a href="library.html" class="sidebar-link">
+                <i class="fas fa-book-open"></i>
+                <span>Library</span>
+            </a>
+            <a href="quiz.html" class="sidebar-link active">
+                <i class="fas fa-robot"></i>
+                <span>AI Quizzes</span>
+            </a>
+            <a href="flashcards.html" class="sidebar-link">
+                <i class="fas fa-cards"></i>
+                <span>Flashcards</span>
+            </a>
+            <a href="certificates.html" class="sidebar-link">
+                <i class="fas fa-certificate"></i>
+                <span>Certificates</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1><i class="fas fa-robot" style="color: var(--primary-color);"></i> AI Quiz Generator</h1>
+                <p>Generate smart quizzes from any book or topic</p>
+            </div>
+        </header>
+
+        <!-- Quiz Generator Section -->
+        <section class="quiz-generator">
+            <div class="generator-card">
+                <div class="generator-header">
+                    <div class="ai-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h2>Create Your Quiz</h2>
+                </div>
+                
+                <form id="quizForm" onsubmit="generateQuiz(event)">
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-book"></i>
+                            Select Subject
+                        </label>
+                        <select id="quizSubject" required>
+                            <option value="">Choose a subject...</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="biology">Biology</option>
+                            <option value="english">English</option>
+                            <option value="history">History</option>
+                            <option value="geography">Geography</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-tag"></i>
+                            Quiz Type
+                        </label>
+                        <select id="quizType">
+                            <option value="mixed">Mixed (All Types)</option>
+                            <option value="multiple_choice">Multiple Choice</option>
+                            <option value="true_false">True or False</option>
+                            <option value="short_answer">Short Answer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-question-circle"></i>
+                            Number of Questions
+                        </label>
+                        <select id="questionCount">
+                            <option value="5">5 Questions</option>
+                            <option value="10" selected>10 Questions</option>
+                            <option value="15">15 Questions</option>
+                            <option value="20">20 Questions</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-brain"></i>
+                            Difficulty Level
+                        </label>
+                        <select id="difficulty">
+                            <option value="easy">Easy</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn-generate">
+                        <i class="fas fa-magic"></i>
+                        Generate AI Quiz
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Quiz In Progress -->
+        <section class="quiz-section" id="quizSection" style="display: none;">
+            <div class="quiz-header">
+                <div class="quiz-info">
+                    <h2 id="quizTitle">Quiz in Progress</h2>
+                    <span id="questionCounter">Question 1 of 10</span>
+                </div>
+                <div class="quiz-timer">
+                    <i class="fas fa-clock"></i>
+                    <span id="timer">10:00</span>
+                </div>
+            </div>
+            
+            <div class="quiz-progress">
+                <div class="progress-bar" id="quizProgressBar">
+                    <div class="progress-fill" style="width: 10%;"></div>
+                </div>
+            </div>
+            
+            <div class="quiz-content" id="quizContent">
+                <!-- Questions will be loaded here -->
+            </div>
+            
+            <div class="quiz-actions">
+                <button class="btn-prev" id="prevBtn" onclick="prevQuestion()" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn-next" id="nextBtn" onclick="nextQuestion()">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Quiz Results -->
+        <section class="quiz-results" id="quizResults" style="display: none;">
+            <div class="results-card">
+                <div class="results-icon" id="resultsIcon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2>Quiz Complete!</h2>
+                <div class="score-display">
+                    <span class="score" id="finalScore">85%</span>
+                    <span class="score-label">Your Score</span>
+                </div>
+                
+                <div class="results-stats">
+                    <div class="result-stat correct">
+                        <i class="fas fa-check"></i>
+                        <span id="correctCount">8</span> Correct
+                    </div>
+                    <div class="result-stat incorrect">
+                        <i class="fas fa-times"></i>
+                        <span id="incorrectCount">2</span> Incorrect
+                    </div>
+                </div>
+                
+                <div class="results-actions">
+                    <button class="btn-retry" onclick="retryQuiz()">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>
+                    <button class="btn-review" onclick="reviewAnswers()">
+                        <i class="fas fa-eye"></i> Review Answers
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Quizzes -->
+        <section class="recent-quizzes">
+            <div class="section-header">
+                <h2>Recent Quiz History</h2>
+            </div>
+            
+            <div class="quiz-history">
+                <div class="history-item">
+                    <div class="history-icon math">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="history-info">
+                        <h4>Mathematics Quiz</h4>
+                        <p>10 Questions • January 20, 2024</p>
+                    </div>
+                    <div class="history-score">
+                        <span class="score-badge good">85%</span>
+                    </div>
+                </div>
+                
+                <div class="history-item">
+                    <div class="history-icon physics">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="history-info">
+                        <h4>Physics Quiz</h4>
+                        <p>10 Questions • January 18, 2024</p>
+                    </div>
+                    <div class="history-score">
+                        <span class="score-badge excellent">92%</span>
+                    </div>
+                </div>
+                
+                <div class="history-item">
+                    <div class="history-icon english">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="history-info">
+                        <h4>English Quiz</h4>
+                        <p>10 Questions • January 15, 2024</p>
+                    </div>
+                    <div class="history-score">
+                        <span class="score-badge average">75%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/quiz.js"></script>
+</body>
+</html>

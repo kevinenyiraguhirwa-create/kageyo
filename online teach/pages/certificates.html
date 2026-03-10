@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificates - EduVault Smart Revision</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo" onclick="window.location.href='../index.html'">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduVault</span>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="courses.html" class="sidebar-link">
+                <i class="fas fa-book"></i>
+                <span>My Courses</span>
+            </a>
+            <a href="library.html" class="sidebar-link">
+                <i class="fas fa-book-open"></i>
+                <span>Library</span>
+            </a>
+            <a href="quiz.html" class="sidebar-link">
+                <i class="fas fa-robot"></i>
+                <span>AI Quizzes</span>
+            </a>
+            <a href="flashcards.html" class="sidebar-link">
+                <i class="fas fa-cards"></i>
+                <span>Flashcards</span>
+            </a>
+            <a href="certificates.html" class="sidebar-link active">
+                <i class="fas fa-certificate"></i>
+                <span>Certificates</span>
+            </a>
+            <a href="progress.html" class="sidebar-link">
+                <i class="fas fa-chart-line"></i>
+                <span>Progress</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="sidebar-link" onclick="logoutUser()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>My <span style="color: var(--primary-color);">Certificates</span></h1>
+                <p>View and download your earned certificates</p>
+            </div>
+        </header>
+
+        <!-- Certificates Stats -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon courses">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-value" id="totalCertificates">2</span>
+                        <span class="stat-label">Total Certificates</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon modules">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-value" id="pendingCertificates">3</span>
+                        <span class="stat-label">In Progress</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon quizzes">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="stat-details">
+                        <span class="stat-value" id="downloadCount">5</span>
+                        <span class="stat-label">Downloads</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Earned Certificates -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>Earned Certificates</h2>
+            </div>
+            
+            <div class="certificates-grid" id="certificatesGrid">
+                <!-- Certificate Card 1 -->
+                <div class="certificate-card">
+                    <div class="certificate-preview">
+                        <div class="cert-badge">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>Biology Fundamentals</h3>
+                        <p>Completed on January 15, 2024</p>
+                    </div>
+                    <div class="certificate-details">
+                        <div class="cert-info">
+                            <span><i class="fas fa-id-card"></i> ID: EV-BIO-2024-001</span>
+                            <span><i class="fas fa-star"></i> Score: 92%</span>
+                        </div>
+                        <div class="cert-actions">
+                            <button class="btn-view" onclick="viewCertificate(1)">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn-download" onclick="downloadCertificate(1)">
+                                <i class="fas fa-download"></i> Download PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificate Card 2 -->
+                <div class="certificate-card">
+                    <div class="certificate-preview">
+                        <div class="cert-badge">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>English Literature Mastery</h3>
+                        <p>Completed on February 20, 2024</p>
+                    </div>
+                    <div class="certificate-details">
+                        <div class="cert-info">
+                            <span><i class="fas fa-id-card"></i> ID: EV-ENG-2024-002</span>
+                            <span><i class="fas fa-star"></i> Score: 88%</span>
+                        </div>
+                        <div class="cert-actions">
+                            <button class="btn-view" onclick="viewCertificate(2)">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn-download" onclick="downloadCertificate(2)">
+                                <i class="fas fa-download"></i> Download PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificates In Progress -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>In Progress</h2>
+            </div>
+            
+            <div class="progress-certificates">
+                <div class="progress-cert-item">
+                    <div class="cert-icon pending">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="cert-progress-info">
+                        <h4>Advanced Mathematics</h4>
+                        <p>80% complete - 4 more lessons to go</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                    <button class="btn-continue" onclick="window.location.href='course-view.html?id=1'">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="progress-cert-item">
+                    <div class="cert-icon pending">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="cert-progress-info">
+                        <h4>Chemistry Essential</h4>
+                        <p>60% complete - 8 more lessons to go</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <button class="btn-continue" onclick="window.location.href='course-view.html?id=5'">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="progress-cert-item">
+                    <div class="cert-icon pending">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="cert-progress-info">
+                        <h4>Physics Fundamentals</h4>
+                        <p>40% complete - 12 more lessons to go</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%;"></div>
+                        </div>
+                    </div>
+                    <button class="btn-continue" onclick="window.location.href='course-view.html?id=2'">
+                        Continue <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificate Templates -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>Available Certificates</h2>
+            </div>
+            
+            <div class="available-certificates">
+                <div class="available-cert">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h4>Primary School Certificate</h4>
+                    <p>Complete all P6 subjects</p>
+                </div>
+                <div class="available-cert">
+                    <i class="fas fa-school"></i>
+                    <h4>Secondary School Certificate</h4>
+                    <p>Complete all S6 subjects</p>
+                </div>
+                <div class="available-cert">
+                    <i class="fas fa-tools"></i>
+                    <h4>TVET Certificate</h4>
+                    <p>Complete trade certification</p>
+                </div>
+                <div class="available-cert">
+                    <i class="fas fa-university"></i>
+                    <h4>University Degree</h4>
+                    <p>Complete faculty requirements</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Certificate View Modal -->
+    <div class="modal" id="certificateModal">
+        <div class="modal-content certificate-modal">
+            <span class="close-modal" onclick="closeCertificateModal()">&times;</span>
+            <div class="certificate-display" id="certificateDisplay">
+                <!-- Certificate will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/certificates.js"></script>
+</body>
+</html>

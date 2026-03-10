@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Library - EduVault Smart Revision</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/library.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="window.location.href='../index.html'">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduVault</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#levels" class="nav-link">Levels</a></li>
+                <li><a href="library.html" class="nav-link active">Library</a></li>
+                <li><a href="courses.html" class="nav-link">Courses</a></li>
+                <li><a href="../index.html#features" class="nav-link">Features</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-login" id="authButton">Login</button>
+                <button class="btn-register" onclick="window.location.href='register.html'">Get Started</button>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Simple auth system using localStorage
+        let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const authButton = document.getElementById('authButton');
+        
+        function updateAuthUI() {
+            if (isLoggedIn) {
+                authButton.textContent = 'Logout';
+                authButton.onclick = logout;
+            } else {
+                authButton.textContent = 'Login';
+                authButton.onclick = () => window.location.href = 'login.html';
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            isLoggedIn = false;
+            updateAuthUI();
+            window.location.reload();
+        }
+        
+        // Check login on load
+        updateAuthUI();
+        if (!isLoggedIn) {
+            alert('Please login to access the library and read books.');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <!-- Library Hero -->
+    <section class="library-hero">
+        <div class="library-hero-content">
+            <h1><i class="fas fa-book-open"></i> Smart Digital Library</h1>
+            <p>Access free textbooks from OpenStax, Project Gutenberg & more. Read online or download PDF - 100% legal & free!</p>
+            
+            <div class="library-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="librarySearch" placeholder="Search books, subjects, topics..." oninput="searchBooks()">
+                </div>
+                <div class="search-filters">
+                    <select id="levelFilter" onchange="filterBooks()">
+                        <option value="all">All Levels</option>
+                        <option value="primary">Primary (P1-P6)</option>
+                        <option value="secondary">Secondary (S1-S6)</option>
+                        <option value="tvet">TVET</option>
+                        <option value="university">University</option>
+                    </select>
+                    <select id="subjectFilter" onchange="filterBooks()">
+                        <option value="all">All Subjects</option>
+                        <option value="mathematics">Mathematics</option>
+                        <option value="physics">Physics</option>
+                        <option value="chemistry">Chemistry</option>
+                        <option value="biology">Biology</option>
+                        <option value="english">English</option>
+                        <option value="computer science">Computer Science</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Library Stats -->
+    <section class="library-stats">
+        <div class="stats-container">
+            <div class="stat-box">
+                <i class="fas fa-book"></i>
+                <span class="stat-num" data-target="18">0</span>
+                <span class="stat-label">Free Textbooks</span>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-file-alt"></i>
+                <span class="stat-num">500+</span>
+                <span class="stat-label">Chapters</span>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-users"></i>
+                <span class="stat-num">1M+</span>
+                <span class="stat-label">Students</span>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-university"></i>
+                <span class="stat-num">100%</span>
+                <span class="stat-label">Free OER</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Books -->
+    <section class="library-content">
+        <div class="section-header">
+            <h2>Free <span class="highlight">OER Textbooks</span></h2>
+            <p>Peer-reviewed textbooks from OpenStax & Project Gutenberg - 100% free & legal</p>
+        </div>
+
+        <div class="books-grid" id="booksGrid">
+            <!-- Books will be dynamically loaded here -->
+        </div>
+
+        <!-- Book Preview Modal -->
+        <div class="modal" id="bookPreviewModal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closePreview()">&times;</span>
+                <div class="book-preview">
+                    <div class="preview-cover" id="previewCover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="preview-details">
+                        <h2 id="previewTitle">Book Title</h2>
+                        <p class="preview-author" id="previewAuthor">Author Name</p>
+                        <div class="preview-meta">
+                            <span><i class="fas fa-layer-group"></i> <span id="previewChapters">0</span> Chapters</span>
+                            <span><i class="fas fa-file"></i> <span id="previewPages">0</span> Pages</span>
+                            <span><i class="fas fa-graduation-cap"></i> <span id="previewLevel">Level</span></span>
+                        </div>
+                        <p class="preview-description" id="previewDescription">Description</p>
+                        <div class="preview-actions">
+                            <button class="btn-read" onclick="readBook()">
+                                <i class="fas fa-book-reader"></i> Read Online
+                            </button>
+                            <button class="btn-download" onclick="downloadBook()">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bulk Upload Section (For Teachers/Admin) -->
+    <section class="bulk-upload">
+        <div class="bulk-upload-content">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <h3>Bulk Book Upload</h3>
+            <p>Teachers and Admins can upload thousands of books at once</p>
+            <button class="btn-upload" onclick="showUploadModal()">
+                <i class="fas fa-plus"></i> Upload Books
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>EduVault</span>
+                    </div>
+                    <p>The smartest E-Learning platform for students from Primary to University.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="library.html">Library</a></li>
+                            <li><a href="courses.html">Courses</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Education</h4>
+                        <ul>
+                            <li><a href="#">Primary School</a></li>
+                            <li><a href="#">Secondary School</a></li>
+                            <li><a href="#">TVET</a></li>
+                            <li><a href="#">University</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EduVault Smart Revision. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/library.js"></script>
+</body>
+</html>

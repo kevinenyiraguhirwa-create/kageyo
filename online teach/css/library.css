@@ -1,0 +1,523 @@
+/* ============================================
+   Library Page Specific Styles
+   ============================================ */
+
+/* Library Hero */
+.library-hero {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4f46e5 100%);
+    padding: 10rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.library-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+
+.library-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.library-hero h1 {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.library-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+/* Library Search */
+.library-search {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-xl);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: var(--gray-100);
+    border-radius: var(--radius-lg);
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.search-box i {
+    color: var(--gray-400);
+    margin-right: 0.75rem;
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.search-filters {
+    display: flex;
+    gap: 1rem;
+}
+
+.search-filters select {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-family: inherit;
+    cursor: pointer;
+    background: white;
+}
+
+.search-filters select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Library Stats */
+.library-stats {
+    background: white;
+    padding: 2rem;
+    margin-top: -2rem;
+    position: relative;
+    z-index: 10;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.stat-box {
+    text-align: center;
+}
+
+.stat-box i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-box .stat-num {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--dark-bg);
+}
+
+.stat-box .stat-label {
+    color: var(--gray-500);
+    font-size: 0.875rem;
+}
+
+/* Library Content */
+.library-content {
+    padding: 4rem 2rem;
+    background: var(--gray-100);
+    min-height: 60vh;
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Book Card */
+.book-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.book-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+.book-cover {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: white;
+    position: relative;
+}
+
+.book-cover.math { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+.book-cover.physics { background: linear-gradient(135deg, #10b981, #34d399); }
+.book-cover.biology { background: linear-gradient(135deg, #059669, #10b981); }
+.book-cover.chemistry { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+.book-cover.english { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+.book-cover.coding { background: linear-gradient(135deg, #ec4899, #f472b6); }
+.book-cover.history { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+.book-cover.geography { background: linear-gradient(135deg, #14b8a6, #2dd4bf); }
+
+.book-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.book-card:hover .book-actions {
+    opacity: 1;
+}
+
+/* Book Source Badge */
+.book-source {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(99, 102, 241, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 5;
+}
+
+.book-source.openstax {
+    background: #da291c;
+}
+
+.book-source.gutenberg {
+    background: #2d5016;
+}
+
+.book-action-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    color: var(--gray-600);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.book-action-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.book-info {
+    padding: 1.5rem;
+}
+
+.book-info h3 {
+    font-size: 1.125rem;
+    color: var(--dark-bg);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.book-info .author {
+    color: var(--gray-500);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.book-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+.book-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.book-level {
+    display: inline-block;
+    background: var(--gray-100);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    margin-top: 0.75rem;
+    font-weight: 500;
+}
+
+/* Book Preview Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--radius-xl);
+    max-width: 900px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalSlide 0.3s ease;
+}
+
+@keyframes modalSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--gray-500);
+    z-index: 10;
+}
+
+.close-modal:hover {
+    color: var(--dark-bg);
+}
+
+.book-preview {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.preview-cover {
+    height: 350px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    color: white;
+}
+
+.preview-details h2 {
+    font-size: 1.75rem;
+    color: var(--dark-bg);
+    margin-bottom: 0.5rem;
+}
+
+.preview-author {
+    color: var(--gray-500);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.preview-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.preview-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--gray-600);
+    font-size: 0.875rem;
+}
+
+.preview-meta i {
+    color: var(--primary-color);
+}
+
+.preview-description {
+    color: var(--gray-600);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.preview-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-read,
+.btn-download {
+    flex: 1;
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.btn-read {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.btn-read:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-download {
+    background: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-download:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Bulk Upload Section */
+.bulk-upload {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    padding: 4rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--gray-200);
+}
+
+.bulk-upload-content {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.upload-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: var(--primary-color);
+    box-shadow: var(--shadow-lg);
+}
+
+.bulk-upload h3 {
+    font-size: 1.5rem;
+    color: var(--dark-bg);
+    margin-bottom: 0.5rem;
+}
+
+.bulk-upload p {
+    color: var(--gray-500);
+    margin-bottom: 1.5rem;
+}
+
+.btn-upload {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.btn-upload:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .library-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .search-filters {
+        flex-direction: column;
+    }
+    
+    .stats-container {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+    
+    .book-preview {
+        grid-template-columns: 1fr;
+    }
+    
+    .preview-cover {
+        height: 250px;
+    }
+    
+    .preview-actions {
+        flex-direction: column;
+    }
+}

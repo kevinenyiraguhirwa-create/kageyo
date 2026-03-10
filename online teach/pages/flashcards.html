@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards - EduVault Smart Revision</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo" onclick="window.location.href='../index.html'">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduVault</span>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="courses.html" class="sidebar-link">
+                <i class="fas fa-book"></i>
+                <span>My Courses</span>
+            </a>
+            <a href="library.html" class="sidebar-link">
+                <i class="fas fa-book-open"></i>
+                <span>Library</span>
+            </a>
+            <a href="quiz.html" class="sidebar-link">
+                <i class="fas fa-robot"></i>
+                <span>AI Quizzes</span>
+            </a>
+            <a href="flashcards.html" class="sidebar-link active">
+                <i class="fas fa-cards"></i>
+                <span>Flashcards</span>
+            </a>
+            <a href="certificates.html" class="sidebar-link">
+                <i class="fas fa-certificate"></i>
+                <span>Certificates</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1><i class="fas fa-cards" style="color: var(--primary-color);"></i> Smart Flashcards</h1>
+                <p>Generate flashcards from any topic for effective learning</p>
+            </div>
+            <div class="header-right">
+                <button class="btn-create" onclick="showCreateModal()">
+                    <i class="fas fa-plus"></i> Create Flashcard Set
+                </button>
+            </div>
+        </header>
+
+        <!-- Flashcard Creator -->
+        <section class="flashcard-creator" id="flashcardCreator">
+            <div class="creator-card">
+                <h2><i class="fas fa-magic"></i> AI Flashcard Generator</h2>
+                <p>Create smart flashcards from your study materials</p>
+                
+                <form onsubmit="generateFlashcards(event)">
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <select id="flashcardSubject">
+                            <option value="mathematics">Mathematics</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="biology">Biology</option>
+                            <option value="english">English</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Cards</label>
+                        <select id="flashcardCount">
+                            <option value="5">5 Cards</option>
+                            <option value="10" selected>10 Cards</option>
+                            <option value="15">15 Cards</option>
+                            <option value="20">20 Cards</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-generate">
+                        <i class="fas fa-magic"></i> Generate Flashcards
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Flashcard Study Mode -->
+        <section class="flashcard-study" id="flashcardStudy" style="display: none;">
+            <div class="study-header">
+                <div class="study-progress">
+                    <span id="cardProgress">1 / 10</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 10%;"></div>
+                    </div>
+                </div>
+                <div class="study-actions">
+                    <button class="btn-nav" onclick="shuffleCards()">
+                        <i class="fas fa-random"></i>
+                    </button>
+                    <button class="btn-nav" onclick="resetCards()">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flashcard-container">
+                <div class="flashcard" onclick="flipCard()">
+                    <div class="flashcard-inner" id="flashcardInner">
+                        <div class="flashcard-front">
+                            <span class="card-label">Question</span>
+                            <p id="cardQuestion">What is the capital of France?</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="card-label">Answer</span>
+                            <p id="cardAnswer">Paris</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="study-controls">
+                <button class="btn-control" onclick="prevCard()">
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <div class="card-indicators" id="cardIndicators">
+                    <!-- Indicators will be generated here -->
+                </div>
+                <button class="btn-control" onclick="nextCard()">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- My Flashcard Sets -->
+        <section class="flashcard-sets">
+            <div class="section-header">
+                <h2>My Flashcard Sets</h2>
+            </div>
+            
+            <div class="sets-grid">
+                <div class="set-card">
+                    <div class="set-icon math">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="set-info">
+                        <h4>Mathematics Formulas</h4>
+                        <p>15 cards • Last studied today</p>
+                    </div>
+                    <button class="btn-study" onclick="studySet('math')">Study</button>
+                </div>
+                
+                <div class="set-card">
+                    <div class="set-icon physics">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="set-info">
+                        <h4>Physics Definitions</h4>
+                        <p>20 cards • Last studied yesterday</p>
+                    </div>
+                    <button class="btn-study" onclick="studySet('physics')">Study</button>
+                </div>
+                
+                <div class="set-card">
+                    <div class="set-icon chemistry">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="set-info">
+                        <h4>Chemistry Elements</h4>
+                        <p>25 cards • Last studied 2 days ago</p>
+                    </div>
+                    <button class="btn-study" onclick="studySet('chemistry')">Study</button>
+                </div>
+                
+                <div class="set-card">
+                    <div class="set-icon biology">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <div class="set-info">
+                        <h4>Biology Terms</h4>
+                        <p>18 cards • Last studied 1 week ago</p>
+                    </div>
+                    <button class="btn-study" onclick="studySet('biology')">Study</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/flashcards.js"></script>
+</body>
+</html>

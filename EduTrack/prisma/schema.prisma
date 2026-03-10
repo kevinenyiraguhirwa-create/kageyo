@@ -1,0 +1,126 @@
+// ============================================
+// EduTrack Library - Prisma Schema
+// ============================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// User Model
+// ============================================
+
+model User {
+  id              String   @id @default(uuid())
+  email           String   @unique
+  passwordHash    String   @map("password_hash")
+  fullName        String   @map("full_name")
+  phone           String?
+  address         String?
+  educationLevel  String   @map("education_level")
+  school          String?
+  isActive        Boolean  @default(true) @map("is_active")
+  role            UserRole @default(STUDENT)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  accessRequests  AccessRequest[]
+  accessLogs      AccessLog[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  STUDENT
+  ADMIN
+}
+
+// ============================================
+// Book Model
+// ============================================
+
+model Book {
+  id             String   @id @default(uuid())
+  title          String
+  subject        String
+  educationLevel String   @map("education_level")
+  filePath       String   @map("file_path")
+  coverPath      String?  @map("cover_path")
+  description    String?
+  uploadedAt     DateTime @default(now()) @map("uploaded_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  accessRequests AccessRequest[]
+  accessLogs    AccessLog[]
+
+  @@map("books")
+}
+
+// ============================================
+// Access Request Model (Intention Form)
+// ============================================
+
+model AccessRequest {
+  id             String   @id @default(uuid())
+  userId         String   @map("user_id")
+  bookId         String?  @map("book_id")
+  bookTitle      String   @map("book_title")
+  subject        String
+  educationLevel String   @map("education_level")
+  purpose        String   // JSON stringified array
+  status         RequestStatus @default(PENDING)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book           Book?    @relation(fields: [bookId], references: [id], onDelete: SetNull)
+
+  @@map("access_requests")
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// ============================================
+// Access Log Model
+// ============================================
+
+model AccessLog {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  bookId    String   @map("book_id")
+  action    String   // "view" or "download"
+  ip        String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@map("access_logs")
+}
+
+// ============================================
+// Refresh Token Model
+// ============================================
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("refresh_tokens")
+}

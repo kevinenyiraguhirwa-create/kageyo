@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - EduVault Smart Revision</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Courses Page Styles */
+        .courses-hero {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4f46e5 100%);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .courses-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .courses-hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .courses-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: white;
+            color: var(--primary-color);
+        }
+        
+        .courses-section {
+            padding: 4rem 2rem;
+            background: var(--gray-100);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto 2rem;
+        }
+        
+        .section-header h2 {
+            font-size: 1.75rem;
+            color: var(--dark-bg);
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .course-banner {
+            height: 160px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .course-banner i {
+            font-size: 4rem;
+            color: rgba(255,255,255,0.3);
+        }
+        
+        .course-banner.math { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .course-banner.physics { background: linear-gradient(135deg, #10b981, #34d399); }
+        .course-banner.chemistry { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .course-banner.biology { background: linear-gradient(135deg, #059669, #10b981); }
+        .course-banner.english { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .course-banner.coding { background: linear-gradient(135deg, #ec4899, #f472b6); }
+        .course-banner.business { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        
+        .course-level {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .course-content {
+            padding: 1.5rem;
+        }
+        
+        .course-content h3 {
+            font-size: 1.25rem;
+            color: var(--dark-bg);
+            margin-bottom: 0.5rem;
+        }
+        
+        .course-content .author {
+            color: var(--gray-500);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-bottom: 1rem;
+        }
+        
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .course-meta i {
+            color: var(--primary-color);
+        }
+        
+        .course-rating {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .stars {
+            color: var(--accent-color);
+        }
+        
+        .course-price {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .course-price.free {
+            color: var(--primary-color);
+        }
+        
+        .btn-enroll {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn-enroll:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        @media (max-width: 768px) {
+            .courses-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Simple auth system using localStorage
+        let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const authButton = document.getElementById('authButton');
+        
+        function updateAuthUI() {
+            if (isLoggedIn) {
+                authButton.textContent = 'Logout';
+                authButton.onclick = logout;
+            } else {
+                authButton.textContent = 'Login';
+                authButton.onclick = () => window.location.href = 'login.html';
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            isLoggedIn = false;
+            updateAuthUI();
+            window.location.reload();
+        }
+        
+        // Check login on load
+        updateAuthUI();
+        if (!isLoggedIn) {
+            alert('Please login to access courses and enroll.');
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="window.location.href='../index.html'">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EduVault</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#levels" class="nav-link">Levels</a></li>
+                <li><a href="library.html" class="nav-link">Library</a></li>
+                <li><a href="courses.html" class="nav-link active">Courses</a></li>
+                <li><a href="../index.html#features" class="nav-link">Features</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-login" id="authButton">Login</button>
+                <button class="btn-register" onclick="window.location.href='register.html'">Get Started</button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="courses-hero">
+        <h1>Explore Our <span style="color: #fbbf24;">Courses</span></h1>
+        <p>Choose from 1,200+ courses across all education levels. Learn from expert instructors and earn certificates.</p>
+        
+        <div class="courses-filters">
+            <button class="filter-btn active" onclick="filterCourses('all')">All Courses</button>
+            <button class="filter-btn" onclick="filterCourses('primary')">Primary</button>
+            <button class="filter-btn" onclick="filterCourses('secondary')">Secondary</button>
+            <button class="filter-btn" onclick="filterCourses('tvet')">TVET</button>
+            <button class="filter-btn" onclick="filterCourses('university')">University</button>
+        </div>
+    </section>
+
+    <!-- Courses Grid -->
+    <section class="courses-section">
+        <div class="section-header">
+            <h2>Featured Courses</h2>
+        </div>
+        
+        <div class="courses-grid" id="coursesGrid">
+            <!-- Course 1 -->
+            <div class="course-card" data-level="secondary">
+                <div class="course-banner math">
+                    <span class="course-level">S1-S6</span>
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <div class="course-content">
+                    <h3>Advanced Mathematics</h3>
+                    <p class="author">Dr. John Smith</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-play-circle"></i> 45 Lessons</span>
+                        <span><i class="fas fa-user-graduate"></i> 12,500</span>
+                    </div>
+                    <div class="course-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span style="color: var(--gray-500); margin-left: 0.5rem;">4.9</span>
+                        </div>
+                        <span class="course-price free">FREE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="course-card" data-level="secondary">
+                <div class="course-banner physics">
+                    <span class="course-level">S3-S6</span>
+                    <i class="fas fa-atom"></i>
+                </div>
+                <div class="course-content">
+                    <h3>Physics Fundamentals</h3>
+                    <p class="author">Prof. Sarah Johnson</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-play-circle"></i> 60 Lessons</span>
+                        <span><i class="fas fa-user-graduate"></i> 8,200</span>
+                    </div>
+                    <div class="course-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span style="color: var(--gray-500); margin-left: 0.5rem;">4.8</span>
+                        </div>
+                        <span class="course-price free">FREE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="course-card" data-level="primary">
+                <div class="course-banner english">
+                    <span class="course-level">P4-P6</span>
+                    <i class="fas fa-language"></i>
+                </div>
+                <div class="course-content">
+                    <h3>English Literature</h3>
+                    <p class="author">Ms. Emily Williams</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-play-circle"></i> 80 Lessons</span>
+                        <span><i class="fas fa-user-graduate"></i> 15,000</span>
+                    </div>
+                    <div class="course-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span style="color: var(--gray-500); margin-left: 0.5rem;">4.9</span>
+                        </div>
+                        <span class="course-price">$29.99</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="course-card" data-level="university">
+                <div class="course-banner coding">
+                    <span class="course-level">University</span>
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="course-content">
+                    <h3>Computer Science Basics</h3>
+                    <p class="author">Prof. David Lee</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-play-circle"></i> 100 Lessons</span>
+                        <span><i class="fas fa-user-graduate"></i> 20,000</span>
+                    </div>
+                    <div class="course-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span style="color: var(--gray-500); margin-left: 0.5rem;">4.9</span>
+                        </div>
+                        <span class="course-price">$49.99</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 5 -->
+            <div class="course-card" data-level="secondary">
+                <div class="course-banner chemistry">
+                    <span class="course-level">S3-S6</span>
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="course-content">
+                    <h3>Chemistry Essential</h3>
+                    <p class="author">Dr. Robert Brown</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-play-circle"></i> 55 Lessons</span>
+                        <span><i class="fas fa-user-graduate"></i> 9,800</span>
+                    </div>
+                    <div class="course-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span style="color: var(--gray-500); margin-left: 0.5rem;">4.7</span>
+                        </div>
+                        <span class="course-price free">FREE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 6 -->
+            <div class="course-card" data-level="secondary">
+                <div class="course-banner biology">
+                    <span class="course-level">S1-S6</span>
+                    <i class="fas fa-dna"></i>
+                </div>
+                <div class="course-content">
+                    <h3>Biology for Life</h3>
+                    <p class="author">Dr. Michael Chen</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-play-circle"></i> 70 Lessons</span>
+                        <span><i class="fas fa-user-graduate"></i> 11,200</span>
+                    </div>
+                    <div class="course-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span style="color: var(--gray-500); margin-left: 0.5rem;">4.9</span>
+                        </div>
+                        <span class="course-price free">FREE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>EduVault</span>
+                    </div>
+                    <p>The smartest E-Learning platform for students from Primary to University.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EduVault Smart Revision. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function filterCourses(level) {
+            const cards = document.querySelectorAll('.course-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            cards.forEach(card => {
+                if (level === 'all' || card.dataset.level === level) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
