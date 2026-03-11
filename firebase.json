@@ -10,7 +10,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/online teach/pages/index.html"
+        "destination": "/index.html"
       }
     ],
     "headers": [
